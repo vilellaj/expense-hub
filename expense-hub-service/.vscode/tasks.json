@@ -1,0 +1,28 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cleanapi",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "clean",
+                "${workspaceFolder}/ExpenseHub.Service.API/ExpenseHub.Service.API.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "buildapi",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/ExpenseHub.Service.API/ExpenseHub.Service.API.csproj"
+            ],
+            "problemMatcher": "$msCompile",
+            "dependsOn": [
+                "cleanapi"
+            ]
+        }
+    ]
+}

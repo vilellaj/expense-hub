@@ -8,6 +8,7 @@ namespace ExpenseHub.Service.Domain
         public static IServiceCollection RegisterDomainServiceDependencies(this IServiceCollection services)
         {
             services.AddTransient<UserHandler, UserHandler>();
+            services.AddTransient<ExpenseHandler, ExpenseHandler>();
             return services;
         }
     }

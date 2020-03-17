@@ -5,5 +5,10 @@ namespace ExpenseHub.Service.Domain.Commands.Results
     public class MessageResult : ICommandResult
     {
         public string Message { get; set; }
+
+        public MessageResult(string message)
+        {
+            Message = message;
+        }
     }
 }

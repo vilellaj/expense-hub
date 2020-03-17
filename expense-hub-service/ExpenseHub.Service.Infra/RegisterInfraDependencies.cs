@@ -9,6 +9,7 @@ namespace ExpenseHub.Service.Infra
         public static IServiceCollection RegisterInfraServiceDependencies(this IServiceCollection services)
         {
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IExpenseRepository, ExpenseRepository>();
             return services;
         }
     }
