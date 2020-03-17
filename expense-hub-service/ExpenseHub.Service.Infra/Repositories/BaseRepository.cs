@@ -8,47 +8,38 @@ namespace ExpenseHub.Service.Infra.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
+        private readonly AppDataContext _context;
+        public BaseRepository(AppDataContext context)
+        {
+            _context = context;
+        }
+
         public async Task Delete(T entity)
         {
-            using (var ctx = new AppDataContext())
-            {
-                ctx.Set<T>().Remove(entity);
-                await ctx.SaveChangesAsync();
-            }
+            _context.Set<T>().Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IList<T>> GetAll()
         {
-            using (var ctx = new AppDataContext())
-            {
-                return await ctx.Set<T>().ToListAsync();
-            }
+            return await _context.Set<T>().ToListAsync();
         }
 
         public async Task<T> GetById(int id)
         {
-            using (var ctx = new AppDataContext())
-            {
-                return await ctx.Set<T>().FindAsync(id);
-            }
+            return await _context.Set<T>().FindAsync(id);
         }
 
         public async Task Insert(T entity)
         {
-            using (var ctx = new AppDataContext())
-            {
-                await ctx.Set<T>().AddAsync(entity);
-                await ctx.SaveChangesAsync();
-            }
+            await _context.Set<T>().AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task Update(T entity)
         {
-            using (var ctx = new AppDataContext())
-            {
-                ctx.Set<T>().Update(entity);
-                await ctx.SaveChangesAsync();
-            }
+            _context.Set<T>().Update(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }
