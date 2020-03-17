@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
-import { AdminComponent } from './theme/layout/admin/admin.component';
-import { AuthComponent } from './theme/layout/auth/auth.component';
+import { AdminComponent } from './layout/admin/admin.component';
+import { AuthComponent } from './layout/auth/auth.component';
 
 const routes: Routes = [
   {
@@ -18,6 +18,10 @@ const routes: Routes = [
       {
         path: 'expenses',
         loadChildren: () => import('./pages/expenses/expenses.module').then(module => module.ExpensesModule)
+      },
+      {
+        path: 'about',
+        loadChildren: () => import('./pages/about/about.module').then(module => module.AboutModule)
       }
     ]
   },

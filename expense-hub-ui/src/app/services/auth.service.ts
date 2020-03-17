@@ -1,18 +1,74 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { HttpService } from '../http.service';
-import { SharedService } from '../shared.service';
+import localePortuguese from '@angular/common/locales/pt';
+import localeSpanish from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
 
-@Injectable()
-export class AuthService implements HttpService {
 
-    baseURL = `${environment.URL_API}/users`;
+@Injectable({
+    providedIn: 'root'
+})
+export class AuthService {
+    sessionData: any;
 
-    constructor(private _http: HttpClient, private _sharedService: SharedService) { }
+    private _locale: string;
 
-    authenticate(username: string, password: string) {
-        const url = `${this.baseURL}/auth`;
-        return this._http.post<any>(url, this._sharedService.httpOptions);
+    set locale(value: string) {
+        this._locale = value;
+    }
+    get locale(): string {
+        return this._locale || 'en-US';
+    }
+
+    registerCulture(culture: string) {
+        if (!culture) {
+            return;
+        }
+        this.locale = culture;
+
+        // Register locale data since only the en-US locale data comes with Angular
+        switch (culture) {
+            case 'pt-BR': {
+                registerLocaleData(localePortuguese);
+                break;
+            }
+            case 'es-ES': {
+                registerLocaleData(localeSpanish);
+                break;
+            }
+        }
+    }
+
+    get token(): string {
+        return this.sessionData.token;
+    }
+
+    get usuario(): any {
+        return this.sessionData ? this.sessionData.usuario : <any>{};
+    }
+
+    constructor(private http: HttpClient,
+        private router: Router) {
+        this.sessionData = this.obterDadosSessaoDoStorage() || {};
+    }
+
+    obterDadosSessaoDoStorage() {
+        const dadosStorage = localStorage.getItem(environment.storageKeys.session);
+        return dadosStorage ? JSON.parse(dadosStorage) : null;
+    }
+
+    salvarDadosSessao(dadosSessao: any) {
+        localStorage.setItem(environment.storageKeys.session, JSON.stringify(dadosSessao));
+    }
+
+    limparDados() {
+        this.sessionData = <any>{};
+        localStorage.removeItem(environment.storageKeys.session);
+    }
+
+    loggedIn(): boolean {
+        return localStorage.getItem(environment.storageKeys.session) !== null;
     }
 }

@@ -1,0 +1,40 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <span i18n="@@expenseList">Expense List</span>
+        </div>
+        <div class="col-xs-12 col-sm-6 text-right">
+            <button class="btn btn-primary" [routerLink]="['add']">
+                Adicionar
+            </button>
+        </div>
+    </div>
+    <div class="row m-10">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Value</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let expense of expenses">
+                        <th scope="row">1</th>
+                        <td>{{expense.date | date}}</td>
+                        <td>{{expense.description}}</td>
+                        <td>{{expense.value | currency}}</td>
+                        <td class="text-right">
+                            <button class="btn btn-primary" [routerLink]="['edit', expense.id]">
+                                Ver
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

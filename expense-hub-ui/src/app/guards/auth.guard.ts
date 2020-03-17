@@ -8,14 +8,13 @@ export class AuthGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-        const resultado = localStorage
-            .getItem(environment.storageKeys.dadosSessao);
+        const sessionData = localStorage
+            .getItem(environment.storageKeys.session);
 
-        if (!resultado) {
-            let redirect: string = '/auth/autenticar';
-            this.router.navigate([redirect]);
+        if (!sessionData) {
+            this.router.navigate(['/auth']);
         }
 
-        return !resultado ? false : true;
+        return !sessionData ? false : true;
     }
 }

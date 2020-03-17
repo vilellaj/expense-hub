@@ -1,4 +1,7 @@
 export const environment = {
   production: true,
-  URL_API: ''
+  apiUrl: '',
+  storageKeys: {
+    session: 'eh-session'
+  }
 };

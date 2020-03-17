@@ -28,11 +28,22 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js"
+            ]
           },
           "configurations": {
+            "pt": {
+              "aot": true,
+              "outputPath": "dist/pt/",
+              "i18nFile": "src/locale/messages.pt.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "pt"
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -124,6 +135,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "expense-hub-ui"
 }
