@@ -31,7 +31,7 @@ namespace ExpenseHub.Service.Domain.Handlers
                 {
                     result = new AuthenticateUserResult()
                     {
-                        User = new UserDTO(user.Username),
+                        User = new UserDTO(user.Id, user.Username),
                         Token = GetToken(user)
                     };
                 }

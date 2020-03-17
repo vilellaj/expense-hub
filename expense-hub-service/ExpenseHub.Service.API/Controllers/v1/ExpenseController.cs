@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExpenseHub.Service.Domain.Commands;
+using ExpenseHub.Service.Domain.Commands.Results;
 using ExpenseHub.Service.Domain.Handlers;
 using ExpenseHub.Service.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -30,14 +31,14 @@ namespace ExpenseHub.Service.API.Controllers.v1
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById([FromQuery] int id)
+        public async Task<IActionResult> GetById(int id)
         {
             var result = await _expenseRepository.GetById(id);
             return Ok(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetById([FromBody] AddExpenseCommand command)
+        public async Task<IActionResult> Add([FromBody] AddExpenseCommand command)
         {
             var result = await _handler.Handle(command);
 
@@ -47,6 +48,29 @@ namespace ExpenseHub.Service.API.Controllers.v1
             }
 
             return Ok(result);
+        }
+
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateExpenseCommand command)
+        {
+            var result = await _handler.Handle(command);
+
+            if (!_handler.Valid)
+            {
+                return BadRequest(_handler.Notifications);
+            }
+
+            return Ok(result);
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var expense = await _expenseRepository.GetById(id);
+            await _expenseRepository.Delete(expense);
+            return Ok(new MessageResult("Item deleted"));
         }
     }
 }

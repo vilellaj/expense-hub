@@ -1,4 +1,5 @@
-﻿using ExpenseHub.Service.Domain.Repositories;
+﻿using ExpenseHub.Service.Domain.Entities;
+using ExpenseHub.Service.Domain.Repositories;
 using ExpenseHub.Service.Infra.DataContexts;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ExpenseHub.Service.Infra.Repositories
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class
+    public class BaseRepository<T> : IBaseRepository<T> where T : TEntity
     {
         private readonly AppDataContext _context;
         public BaseRepository(AppDataContext context)
@@ -27,7 +28,8 @@ namespace ExpenseHub.Service.Infra.Repositories
 
         public async Task<T> GetById(int id)
         {
-            return await _context.Set<T>().FindAsync(id);
+            return await _context.Set<T>()
+                .SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task Insert(T entity)

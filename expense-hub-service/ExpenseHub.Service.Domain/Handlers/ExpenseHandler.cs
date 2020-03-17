@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 namespace ExpenseHub.Service.Domain.Handlers
 {
     public class ExpenseHandler : Notifiable,
-        ICommandHandlerAsync<AddExpenseCommand>
+        ICommandHandlerAsync<AddExpenseCommand>,
+        ICommandHandlerAsync<UpdateExpenseCommand>
     {
         private readonly IExpenseRepository _expenseRepository;
 
@@ -34,6 +35,25 @@ namespace ExpenseHub.Service.Domain.Handlers
             catch (Exception ex)
             {
                 AddNotification("AddExpenseCommand", ex.Message);
+            }
+
+            return result;
+        }
+
+        public async Task<ICommandResult> Handle(UpdateExpenseCommand command)
+        {
+            ICommandResult result = null;
+
+            try
+            {
+                var expense = await _expenseRepository.GetById(command.Id);
+                command.Adapt(expense);
+                await _expenseRepository.Update(expense);
+                return new MessageResult("Item updated");
+            }
+            catch (Exception ex)
+            {
+                AddNotification("UpdateExpenseCommand", ex.Message);
             }
 
             return result;
