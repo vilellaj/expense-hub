@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using ExpenseHub.Service.Domain.Commands;
 using ExpenseHub.Service.Domain.Commands.Results;
 using ExpenseHub.Service.Domain.Handlers;
@@ -26,7 +27,7 @@ namespace ExpenseHub.Service.API.Controllers.v1
         public async Task<IActionResult> GetAll()
         {
             var result = await _expenseRepository.GetAll();
-            return Ok(result);
+            return Ok(result.OrderByDescending(x => x.Date));
         }
 
         [Authorize]
