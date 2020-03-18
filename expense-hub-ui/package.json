@@ -21,7 +21,6 @@
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
     "bootstrap": "^4.4.1",
-    "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",
     "ngx-currency": "^2.2.2",
     "ngx-spinner": "^8.1.0",
