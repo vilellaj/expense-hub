@@ -2,19 +2,21 @@
     <div class="form">
         <form [formGroup]="loginForm">
             <h1>ExpenseHub</h1>
-            <input type="text" formControlName="username" class="user" placeholder="Username" />
-            <input type="password" formControlName="password" class="pass" placeholder="Password" />
-            <button class="login" [disabled]="!loginForm.valid" (click)="login()">Login</button>
+            <input type="text" formControlName="username" class="user" [placeholder]="'Username' | translate" />
+            <input type="password" formControlName="password" class="pass" [placeholder]="'Password' | translate" />
+            <button class="login" [disabled]="!loginForm.valid" (click)="login()">
+                {{'Login' | translate}}
+            </button>
         </form>
     </div>
     <div class="row text-center">
         <div class="col-sm-6">
-            <div class="btn" (click)="_authService.registerCulture('pt-BR')">
+            <div class="btn" (click)="setLang('pt')" [ngClass]="{'current-lang': isCurrentLang('pt')}">
                 PT
             </div>
         </div>
         <div class="col-sm-6">
-            <div class="btn" (click)="_authService.registerCulture('en-ES')">
+            <div class="btn" (click)="setLang('en')" [ngClass]="{'current-lang': isCurrentLang('en')}">
                 EN
             </div>
         </div>

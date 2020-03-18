@@ -7,6 +7,8 @@ import { finalize } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-login',
@@ -16,12 +18,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
     public loginForm: FormGroup;
+    param = { value: 'world' };
 
     constructor(private _formBuilder: FormBuilder,
         private _spinner: NgxSpinnerService,
         private _router: Router,
         private _userService: UserService,
-        public _authService: AuthService) {
+        public _authService: AuthService,
+        private _translate: TranslateService) {
         this.buildForm();
     }
 
@@ -59,5 +63,14 @@ export class LoginComponent implements OnInit {
                     text: message,
                 });
             })
+    }
+
+    setLang(lang): void {
+        localStorage.setItem(environment.storageKeys.lang, lang);
+        this._translate.use(lang);
+    }
+
+    isCurrentLang(lang): boolean {
+        return lang === this._translate.store.currentLang;
     }
 }

@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { finalize } from 'rxjs/operators';
 import { Expense } from 'src/app/models/expense';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-expense-list',
@@ -14,7 +15,8 @@ export class ExpenseListComponent implements OnInit {
     expenses: Array<Expense> = [];
 
     constructor(private _expenseService: ExpenseService,
-        private _spinner: NgxSpinnerService) {
+        private _spinner: NgxSpinnerService,
+        private translate: TranslateService) {
 
     }
 

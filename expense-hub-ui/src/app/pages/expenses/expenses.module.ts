@@ -6,6 +6,8 @@ import { ExpensesRoutingModule } from './expenses-routing.module';
 import { ExpenseService } from 'src/app/services/expense.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxCurrencyModule } from "ngx-currency";
+import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     declarations: [
@@ -16,7 +18,8 @@ import { NgxCurrencyModule } from "ngx-currency";
         CommonModule,
         ReactiveFormsModule,
         NgxCurrencyModule,
-        ExpensesRoutingModule
+        ExpensesRoutingModule,
+        SharedModule.forRoot()
     ],
     providers: [ExpenseService]
 })
