@@ -11,7 +11,7 @@
             </button>
         </div>
     </div>
-    <div class="row m-10">
+    <div class="row m-10" id="desktop-list">
         <div class="col-12">
             <table class="table">
                 <thead>
@@ -37,6 +37,22 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="row m-10" id="mobile-list">
+        <div class="col-12">
+            <div class="card" *ngFor="let expense of expenses">
+                <div class="card-body">
+                    <h5 class="card-title">{{expense.description}}</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{expense.date | date}}</li>
+                    <li class="list-group-item">{{expense.value | currency}}</li>
+                </ul>
+                <div class="card-body text-right">
+                    <a href="#" [routerLink]="['edit', expense.id]" class="card-link">See Details</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

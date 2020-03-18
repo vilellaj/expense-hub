@@ -7,3 +7,24 @@
         text-align: right;
     }
 }
+
+
+// Mobile First
+#mobile-list {
+    display: block;
+}
+
+#desktop-list {
+    display: none;
+}
+
+
+@media only screen and (min-width: 768px) {
+    #mobile-list {
+        display: none;
+    }
+
+    #desktop-list {
+        display: block;
+    }
+}

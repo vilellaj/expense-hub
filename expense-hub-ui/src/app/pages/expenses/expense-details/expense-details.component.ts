@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs/operators';
+import { Expense } from 'src/app/models/expense';
+import { AuthService } from 'src/app/services/auth.service';
 import { ExpenseService } from 'src/app/services/expense.service';
 import Swal from 'sweetalert2';
-import { finalize } from 'rxjs/operators';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
     selector: 'app-expense-details',
@@ -14,7 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ExpenseDetailsComponent implements OnInit {
     private id: string;
-    private expense: any;
+    private expense: Expense;
     public expenseForm: FormGroup;
     public action: string = 'Save';
 
@@ -27,9 +28,9 @@ export class ExpenseDetailsComponent implements OnInit {
         this.buildForm();
     }
 
-    buildForm(expense: any = {}) {
+    buildForm(expense: Expense = new Expense()) {
         const date = expense.date ?
-            new Date(expense.date).toUTCString().split('T')[0] :
+            new Date(expense.date).toISOString().slice(0, -1) :
             '';
 
         this.expenseForm = this._formBuilder.group({

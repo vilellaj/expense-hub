@@ -3,6 +3,7 @@ import { ExpenseService } from 'src/app/services/expense.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { finalize } from 'rxjs/operators';
+import { Expense } from 'src/app/models/expense';
 
 @Component({
     selector: 'app-expense-list',
@@ -10,7 +11,7 @@ import { finalize } from 'rxjs/operators';
     styleUrls: ['./expense-list.component.scss']
 })
 export class ExpenseListComponent implements OnInit {
-    expenses: Array<any> = [];
+    expenses: Array<Expense> = [];
 
     constructor(private _expenseService: ExpenseService,
         private _spinner: NgxSpinnerService) {

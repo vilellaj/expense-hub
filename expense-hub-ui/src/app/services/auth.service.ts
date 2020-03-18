@@ -1,17 +1,19 @@
+import { registerLocaleData } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import localeSpanish from '@angular/common/locales/es';
+import localePortuguese from '@angular/common/locales/pt';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import localePortuguese from '@angular/common/locales/pt';
-import localeSpanish from '@angular/common/locales/es';
-import { registerLocaleData } from '@angular/common';
+import { SessionData } from '../models/sessiona-data';
+import { User } from '../models/user';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    sessionData: any;
+    sessionData: SessionData;
 
     private _locale: string;
 
@@ -45,8 +47,8 @@ export class AuthService {
         return this.sessionData.token;
     }
 
-    get user(): any {
-        return this.sessionData ? this.sessionData.user : <any>{};
+    get user(): User {
+        return this.sessionData ? this.sessionData.user : <User>{};
     }
 
     constructor(private http: HttpClient,
@@ -59,13 +61,13 @@ export class AuthService {
         return dadosStorage ? JSON.parse(dadosStorage) : null;
     }
 
-    saveSessionData(sessionData: any) {
+    saveSessionData(sessionData: SessionData) {
         localStorage.setItem(environment.storageKeys.session, JSON.stringify(sessionData));
         this.sessionData = sessionData;
     }
 
     clearData() {
-        this.sessionData = <any>{};
+        this.sessionData = <SessionData>{};
         localStorage.removeItem(environment.storageKeys.session);
     }
 
