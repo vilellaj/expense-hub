@@ -37,13 +37,6 @@
             ]
           },
           "configurations": {
-            "pt": {
-              "aot": true,
-              "outputPath": "dist/pt/",
-              "i18nFile": "src/locale/messages.pt.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "pt"
-            },
             "production": {
               "fileReplacements": [
                 {

@@ -1,12 +1,12 @@
 <div class="container-fluid">
     <div class="row options-row">
         <div class="col-xs-12 col-sm-6">
-            <h4 i18n="@@expenseList">
+            <h4>
                 Expense List
             </h4>
         </div>
         <div class="col-xs-12 col-sm-6 add-button-wrapper">
-            <button i18n="@@add" class="btn btn-success" [routerLink]="['add']">
+            <button class="btn btn-success" [routerLink]="['add']">
                 Add
             </button>
         </div>
@@ -17,9 +17,9 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col" i18n="@@date">Date</th>
-                        <th scope="col" i18n="@@description">Description</th>
-                        <th scope="col" i18n="@@value">Value</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Value</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -30,7 +30,7 @@
                         <td>{{expense.description}}</td>
                         <td>{{expense.value | currency}}</td>
                         <td class="text-right">
-                            <button i18n="@@details" class="btn btn-primary" [routerLink]="['edit', expense.id]">
+                            <button class="btn btn-primary" [routerLink]="['edit', expense.id]">
                                 Details
                             </button>
                         </td>
@@ -50,7 +50,7 @@
                     <li class="list-group-item">{{expense.value | currency}}</li>
                 </ul>
                 <div class="card-body text-right">
-                    <a href="#" [routerLink]="['edit', expense.id]" class="card-link" i18n="@@seeDetails">See
+                    <a href="#" [routerLink]="['edit', expense.id]" class="card-link">See
                         Details</a>
                 </div>
             </div>

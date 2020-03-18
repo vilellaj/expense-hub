@@ -1,24 +1,21 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 text-center">
-            <h4 i18n="@@expenseDetails">Expense Details</h4>
+            <h4>Expense Details</h4>
         </div>
     </div>
     <form [formGroup]="expenseForm">
         <div class="row">
             <div class="col-12">
-                <input type="text" formControlName="description" class="app-form-input" i18n-placeholder="@@description"
-                    i18n-placeholder="@@description" placeholder="Description" />
+                <input type="text" formControlName="description" class="app-form-input" placeholder="Description" />
             </div>
         </div>
         <div class="row">
             <div class="col-6">
-                <input type="date" formControlName="date" class="app-form-input" i18n-placeholder="@@date"
-                    i18n-placeholder="@@date" placeholder="Date" />
+                <input type="date" formControlName="date" class="app-form-input" placeholder="Date" />
             </div>
             <div class="col-6">
-                <input currencyMask formControlName="value" class="app-form-input" i18n-placeholder="@@value"
-                    i18n-placeholder="@@value" placeholder="Value" />
+                <input currencyMask formControlName="value" class="app-form-input" placeholder="Value" />
             </div>
         </div>
         <div>
@@ -26,7 +23,7 @@
                 {{action}}
             </button>
             &nbsp;
-            <button i18n-placeholder="@@cancel" class="btn btn-warning btn-lg" [routerLink]="['/']">
+            <button class="btn btn-warning btn-lg" [routerLink]="['/']">
                 Cancel
             </button>
         </div>
