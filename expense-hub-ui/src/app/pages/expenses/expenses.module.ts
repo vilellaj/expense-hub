@@ -8,6 +8,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ExpenseDetailsComponent } from './expense-details/expense-details.component';
 import { ExpenseListComponent } from './expense-list/expense-list.component';
 import { ExpensesRoutingModule } from './expenses-routing.module';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @NgModule({
     declarations: [

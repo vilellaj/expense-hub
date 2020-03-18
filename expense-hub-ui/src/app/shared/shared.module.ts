@@ -4,6 +4,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { SwalService } from './swal.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -28,7 +29,8 @@ export function HttpLoaderFactory(http: HttpClient) {
                 deps: [HttpClient]
             }
         })
-    ]
+    ],
+    providers: [SwalService]
 })
 export class SharedModule {
     static forRoot(): ModuleWithProviders {

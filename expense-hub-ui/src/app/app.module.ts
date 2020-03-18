@@ -29,9 +29,9 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       },
-      isolate : false
+      isolate: false
     }),
-    SharedModule.forRoot(),
+    SharedModule,
     HttpClientModule
   ],
   providers: [

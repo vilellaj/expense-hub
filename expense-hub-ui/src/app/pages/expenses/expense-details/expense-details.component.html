@@ -7,16 +7,18 @@
     <form [formGroup]="expenseForm">
         <div class="row">
             <div class="col-12">
-                <input type="text" formControlName="description" class="app-form-input" placeholder="Description" />
+                <input type="text" formControlName="description" class="app-form-input"
+                    [placeholder]="'Description' | translate" />
             </div>
         </div>
         <div class="row">
             <div class="col-6">
-                <input type="text" mask="00/00/0000" [dropSpecialCharacters]="false" formControlName="date"
-                    class="app-form-input" placeholder="Date" />
+                <input type="text" mask="00/00/0000" [dropSpecialCharacters]="false"
+                    [formControl]="expenseForm.get('date')" class="app-form-input" [placeholder]="'Date' | translate" />
             </div>
             <div class="col-6">
-                <input currencyMask formControlName="value" class="app-form-input" placeholder="Value" />
+                <input currencyMask [formControl]="expenseForm.get('value')" class="app-form-input"
+                    [placeholder]="'Value' | translate" />
             </div>
         </div>
         <div>
@@ -25,7 +27,7 @@
             </button>
             &nbsp;
             <button class="btn btn-warning btn-lg" [routerLink]="['/']">
-                Cancel
+                {{'Cancel' | translate}}
             </button>
         </div>
     </form>

@@ -7,18 +7,20 @@ import { Expense } from 'src/app/models/expense';
 import { AuthService } from 'src/app/services/auth.service';
 import { ExpenseService } from 'src/app/services/expense.service';
 import Swal from 'sweetalert2';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { SwalService } from 'src/app/shared/swal.service';
 
 @Component({
     selector: 'app-expense-details',
     templateUrl: './expense-details.component.html',
-    styleUrls: ['./expense-details.component.scss']
+    styleUrls: ['./expense-details.component.scss'],
+    providers: [TranslatePipe]
 })
 export class ExpenseDetailsComponent implements OnInit {
     private id: string;
     private expense: Expense;
     public expenseForm: FormGroup;
-    public action: string = 'Save';
+    public action: string;
 
     constructor(private _spinner: NgxSpinnerService,
         private _route: ActivatedRoute,
@@ -26,7 +28,9 @@ export class ExpenseDetailsComponent implements OnInit {
         private _expenseService: ExpenseService,
         private _formBuilder: FormBuilder,
         private _translate: TranslateService,
-        private _authService: AuthService) {
+        private _authService: AuthService,
+        private _translatePipe: TranslatePipe,
+        private _swalService: SwalService) {
         this.buildForm();
     }
 
@@ -51,9 +55,11 @@ export class ExpenseDetailsComponent implements OnInit {
 
     ngOnInit(): void {
         if (this._route.snapshot.params['id']) {
-            this.action = 'Update';
-            this.id = this._route.snapshot.params['id']
+            this.action = this._translatePipe.transform('Update');
+            this.id = this._route.snapshot.params['id'];
             this.load();
+        } else {
+            this.action = this._translatePipe.transform('Save')
         }
     }
 
@@ -65,11 +71,10 @@ export class ExpenseDetailsComponent implements OnInit {
                 this.expense = res;
                 this.buildForm(this.expense);
             }, (err) => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Something went wrong!'
-                });
+                this._swalService.error(
+                    this._translatePipe.transform('Error'),
+                    this._translatePipe.transform('DefaultError')
+                );
             })
     }
 
@@ -101,18 +106,16 @@ export class ExpenseDetailsComponent implements OnInit {
         this._expenseService.add(value)
             .pipe(finalize(() => this._spinner.hide()))
             .subscribe((res) => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: res.message
-                });
+                this._swalService.success(
+                    this._translatePipe.transform('Success'),
+                    this._translatePipe.transform('ItemSaved')
+                )
                 this._router.navigate(['/']);
             }, (err) => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Something went wrong!'
-                });
+                this._swalService.error(
+                    this._translatePipe.transform('Error'),
+                    this._translatePipe.transform('DefaultError')
+                );
             });
     }
 
@@ -122,18 +125,17 @@ export class ExpenseDetailsComponent implements OnInit {
         this._expenseService.update(value)
             .pipe(finalize(() => this._spinner.hide()))
             .subscribe((res) => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: res.message
-                });
+                this._swalService.success(
+                    this._translatePipe.transform('Success'),
+                    this._translatePipe.transform('ItemUpdated')
+                )
+
                 this._router.navigate(['/']);
             }, (err) => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Something went wrong!'
-                });
+                this._swalService.error(
+                    this._translatePipe.transform('Error'),
+                    this._translatePipe.transform('DefaultError')
+                );
             });
     }
 }

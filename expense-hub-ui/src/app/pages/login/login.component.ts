@@ -7,14 +7,15 @@ import { finalize } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
+import { SwalService } from 'src/app/shared/swal.service';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
-    providers: [UserService]
+    providers: [UserService, TranslatePipe]
 })
 export class LoginComponent implements OnInit {
     public loginForm: FormGroup;
@@ -25,7 +26,9 @@ export class LoginComponent implements OnInit {
         private _router: Router,
         private _userService: UserService,
         public _authService: AuthService,
-        private _translate: TranslateService) {
+        private _translate: TranslateService,
+        private _translatePipe: TranslatePipe,
+        private _swalService: SwalService) {
         this.buildForm();
     }
 
@@ -51,17 +54,16 @@ export class LoginComponent implements OnInit {
                 this._authService.saveSessionData(res);
                 this._router.navigate(['']);
             }, (err) => {
-                let message = 'Something went wrong!';
+                let message = this._translatePipe.transform('DefaultError');
 
                 if (err instanceof HttpErrorResponse && err.status == 401) {
-                    message = 'Wrong user and/or password'
+                    message = this._translatePipe.transform('Wrong user')
                 }
 
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: message,
-                });
+                this._swalService.error(
+                    this._translatePipe.transform('Error'),
+                    message
+                )
             })
     }
 
