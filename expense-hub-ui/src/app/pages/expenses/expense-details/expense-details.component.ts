@@ -7,6 +7,7 @@ import { Expense } from 'src/app/models/expense';
 import { AuthService } from 'src/app/services/auth.service';
 import { ExpenseService } from 'src/app/services/expense.service';
 import Swal from 'sweetalert2';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-expense-details',
@@ -24,6 +25,7 @@ export class ExpenseDetailsComponent implements OnInit {
         private _router: Router,
         private _expenseService: ExpenseService,
         private _formBuilder: FormBuilder,
+        private _translate: TranslateService,
         private _authService: AuthService) {
         this.buildForm();
     }
@@ -39,7 +41,10 @@ export class ExpenseDetailsComponent implements OnInit {
                 Validators.required,
                 Validators.min(0.01)
             ])],
-            date: [date, Validators.required],
+            date: [date, Validators.compose([
+                Validators.required,
+                Validators.minLength(10)
+            ])],
             userId: [this._authService.user.id]
         })
     }
@@ -69,16 +74,31 @@ export class ExpenseDetailsComponent implements OnInit {
     }
 
     addOrUpdate(): void {
-        if (parseInt(this.id) > 0) {
-            this.update();
+        const id = parseInt(this.id);
+        const value = this.expenseForm.value;
+
+        value.date = this.getDate(value.date);
+
+        if (id > 0) {
+            value.id = id;
+            this.update(value);
         } else {
-            this.add();
+            this.add(value);
         }
     }
 
-    add(): void {
+    getDate(date: string): Date {
+        if (this._translate.store.currentLang == 'pt') {
+            const split = date.split('/');
+            date = `${split[1]}/${split[0]}/${split[2]}`
+        }
+
+        return new Date(date);
+    }
+
+    add(value): void {
         this._spinner.show();
-        this._expenseService.add(this.expenseForm.value)
+        this._expenseService.add(value)
             .pipe(finalize(() => this._spinner.hide()))
             .subscribe((res) => {
                 Swal.fire({
@@ -96,11 +116,8 @@ export class ExpenseDetailsComponent implements OnInit {
             });
     }
 
-    update(): void {
+    update(value): void {
         this._spinner.show();
-
-        const value = this.expenseForm.value;
-        value.id = parseInt(this.id);
 
         this._expenseService.update(value)
             .pipe(finalize(() => this._spinner.hide()))

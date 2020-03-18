@@ -12,7 +12,8 @@
         </div>
         <div class="row">
             <div class="col-6">
-                <input type="date" formControlName="date" class="app-form-input" placeholder="Date" />
+                <input type="text" mask="00/00/0000" [dropSpecialCharacters]="false" formControlName="date"
+                    class="app-form-input" placeholder="Date" />
             </div>
             <div class="col-6">
                 <input currencyMask formControlName="value" class="app-form-input" placeholder="Value" />
