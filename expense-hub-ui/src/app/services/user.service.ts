@@ -10,8 +10,8 @@ export class UserService {
 
     constructor(private _http: HttpClient, private _sharedService: SharedService) { }
 
-    authenticate(username: string, password: string) {
+    authenticate(data) {
         const url = `${this.baseURL}/auth`;
-        return this._http.post<any>(url, this._sharedService.httpOptions);
+        return this._http.post<any>(url, data, this._sharedService.httpOptions);
     }
 }

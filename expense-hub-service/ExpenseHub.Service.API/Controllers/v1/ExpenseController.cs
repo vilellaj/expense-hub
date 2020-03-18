@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ExpenseHub.Service.Domain.Commands;
 using ExpenseHub.Service.Domain.Commands.Results;
 using ExpenseHub.Service.Domain.Handlers;
 using ExpenseHub.Service.Domain.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseHub.Service.API.Controllers.v1
@@ -23,6 +21,7 @@ namespace ExpenseHub.Service.API.Controllers.v1
             _expenseRepository = expenseRepository;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -30,6 +29,7 @@ namespace ExpenseHub.Service.API.Controllers.v1
             return Ok(result);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -37,6 +37,8 @@ namespace ExpenseHub.Service.API.Controllers.v1
             return Ok(result);
         }
 
+
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] AddExpenseCommand command)
         {
@@ -50,7 +52,7 @@ namespace ExpenseHub.Service.API.Controllers.v1
             return Ok(result);
         }
 
-
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateExpenseCommand command)
         {
@@ -65,6 +67,7 @@ namespace ExpenseHub.Service.API.Controllers.v1
         }
 
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

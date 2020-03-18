@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ExpenseService } from 'src/app/services/expense.service';
+import Swal from 'sweetalert2';
+import { finalize } from 'rxjs/operators';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
     selector: 'app-expense-details',
@@ -6,7 +13,109 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./expense-details.component.scss']
 })
 export class ExpenseDetailsComponent implements OnInit {
+    private id: string;
+    private expense: any;
+    public expenseForm: FormGroup;
+    public action: string = 'Save';
+
+    constructor(private _spinner: NgxSpinnerService,
+        private _route: ActivatedRoute,
+        private _router: Router,
+        private _expenseService: ExpenseService,
+        private _formBuilder: FormBuilder,
+        private _authService: AuthService) {
+        this.buildForm();
+    }
+
+    buildForm(expense: any = {}) {
+        const date = expense.date ?
+            new Date(expense.date).toUTCString().split('T')[0] :
+            '';
+
+        this.expenseForm = this._formBuilder.group({
+            description: [expense.description, Validators.required],
+            value: [expense.value, Validators.compose([
+                Validators.required,
+                Validators.min(0.01)
+            ])],
+            date: [date, Validators.required],
+            userId: [this._authService.user.id]
+        })
+    }
+
     ngOnInit(): void {
-        throw new Error("Method not implemented.");
+        if (this._route.snapshot.params['id']) {
+            this.action = 'Update';
+            this.id = this._route.snapshot.params['id']
+            this.load();
+        }
+    }
+
+    load(): void {
+        this._spinner.show();
+        this._expenseService.getById(parseInt(this.id))
+            .pipe(finalize(() => this._spinner.hide()))
+            .subscribe((res) => {
+                this.expense = res;
+                this.buildForm(this.expense);
+            }, (err) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Something went wrong!'
+                });
+            })
+    }
+
+    addOrUpdate(): void {
+        if (parseInt(this.id) > 0) {
+            this.update();
+        } else {
+            this.add();
+        }
+    }
+
+    add(): void {
+        this._spinner.show();
+        this._expenseService.add(this.expenseForm.value)
+            .pipe(finalize(() => this._spinner.hide()))
+            .subscribe((res) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: res.message
+                });
+                this._router.navigate(['/']);
+            }, (err) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Something went wrong!'
+                });
+            });
+    }
+
+    update(): void {
+        this._spinner.show();
+
+        const value = this.expenseForm.value;
+        value.id = parseInt(this.id);
+
+        this._expenseService.update(value)
+            .pipe(finalize(() => this._spinner.hide()))
+            .subscribe((res) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: res.message
+                });
+                this._router.navigate(['/']);
+            }, (err) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Something went wrong!'
+                });
+            });
     }
 }

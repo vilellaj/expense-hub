@@ -30,7 +30,7 @@ export class AdminComponent {
             confirmButtonText: 'Yes'
         }).then((result) => {
             if (result.value) {
-                this._authService.limparDados();
+                this._authService.clearData();
                 this._router.navigate(['/auth']);
             }
         })

@@ -1,3 +1,34 @@
 <div class="container-fluid">
-    Expense Details
+    <div class="row">
+        <div class="col-12 text-center">
+            <h4 i18n="@@expenseDetails">Expense Details</h4>
+        </div>
+    </div>
+    <form [formGroup]="expenseForm">
+        <div class="row">
+            <div class="col-12">
+                <input type="text" formControlName="description" class="app-form-input" i18n-placeholder="@@description"
+                    placeholder="Description" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <input type="date" formControlName="date" class="app-form-input" i18n-placeholder="@@date"
+                    placeholder="Date" />
+            </div>
+            <div class="col-6">
+                <input currencyMask formControlName="value" class="app-form-input" i18n-placeholder="@@value"
+                    placeholder="Value" />
+            </div>
+        </div>
+        <div>
+            <button [disabled]="!expenseForm.valid" (click)="addOrUpdate()" class="btn btn-success btn-lg">
+                {{action}}
+            </button>
+            &nbsp;
+            <button class="btn btn-warning btn-lg" [routerLink]="['/']">
+                Cancel
+            </button>
+        </div>
+    </form>
 </div>

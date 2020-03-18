@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ExpenseService } from 'src/app/services/expense.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-expense-list',
@@ -8,35 +12,28 @@ import { Component, OnInit } from '@angular/core';
 export class ExpenseListComponent implements OnInit {
     expenses: Array<any> = [];
 
-    ngOnInit(): void {
+    constructor(private _expenseService: ExpenseService,
+        private _spinner: NgxSpinnerService) {
 
-        this.expenses.push({
-            id: 1,
-            date: Date.now(),
-            description: 'Teste',
-            value: 100
-        });
-        this.expenses.push({
-            id: 1,
-            date: Date.now(),
-            description: 'Teste',
-            value: 100
-        });
-        this.expenses.push({
-            id: 1,
-            date: Date.now(),
-            description: 'Teste',
-            value: 100
-        }); this.expenses.push({
-            id: 1,
-            date: Date.now(),
-            description: 'Teste',
-            value: 100
-        }); this.expenses.push({
-            id: 1,
-            date: Date.now(),
-            description: 'Teste',
-            value: 100
-        })
+    }
+
+    ngOnInit(): void {
+        this.load();
+    }
+
+    load(): void {
+        this._spinner.show();
+
+        this._expenseService.getAll()
+            .pipe(finalize(() => this._spinner.hide()))
+            .subscribe((res) => {
+                this.expenses = res;
+            }, (err) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Something went wrong!'
+                });
+            })
     }
 }

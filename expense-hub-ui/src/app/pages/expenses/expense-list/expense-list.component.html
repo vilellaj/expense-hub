@@ -1,11 +1,13 @@
 <div class="container-fluid">
-    <div class="row">
+    <div class="row options-row">
         <div class="col-xs-12 col-sm-6">
-            <span i18n="@@expenseList">Expense List</span>
+            <h4 i18n="@@expenseList">
+                Expense List
+            </h4>
         </div>
-        <div class="col-xs-12 col-sm-6 text-right">
-            <button class="btn btn-primary" [routerLink]="['add']">
-                Adicionar
+        <div class="col-xs-12 col-sm-6 add-button-wrapper">
+            <button i18n="@@add" class="btn btn-success" [routerLink]="['add']">
+                Add
             </button>
         </div>
     </div>
@@ -23,13 +25,13 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let expense of expenses">
-                        <th scope="row">1</th>
+                        <th scope="row">{{expense.id}}</th>
                         <td>{{expense.date | date}}</td>
                         <td>{{expense.description}}</td>
                         <td>{{expense.value | currency}}</td>
                         <td class="text-right">
                             <button class="btn btn-primary" [routerLink]="['edit', expense.id]">
-                                Ver
+                                Details
                             </button>
                         </td>
                     </tr>

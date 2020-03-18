@@ -1,0 +1,16 @@
+version: '2'
+services:
+    expense-hub-ui:
+        container_name: expense-hub-ui
+        build: ./expense-hub-ui
+        ports:
+            - '80:80'
+        depends_on:
+            - "expense-hub-service"
+    expense-hub-service:
+        container_name: expense-hub-service
+        build:
+            context: ../
+            dockerfile: ./expense-hub-service/ExpenseHub.Service.API
+        ports:
+            - '3000:80'

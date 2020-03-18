@@ -45,25 +45,26 @@ export class AuthService {
         return this.sessionData.token;
     }
 
-    get usuario(): any {
-        return this.sessionData ? this.sessionData.usuario : <any>{};
+    get user(): any {
+        return this.sessionData ? this.sessionData.user : <any>{};
     }
 
     constructor(private http: HttpClient,
         private router: Router) {
-        this.sessionData = this.obterDadosSessaoDoStorage() || {};
+        this.sessionData = this.obtersessionDataDoStorage() || {};
     }
 
-    obterDadosSessaoDoStorage() {
+    obtersessionDataDoStorage() {
         const dadosStorage = localStorage.getItem(environment.storageKeys.session);
         return dadosStorage ? JSON.parse(dadosStorage) : null;
     }
 
-    salvarDadosSessao(dadosSessao: any) {
-        localStorage.setItem(environment.storageKeys.session, JSON.stringify(dadosSessao));
+    saveSessionData(sessionData: any) {
+        localStorage.setItem(environment.storageKeys.session, JSON.stringify(sessionData));
+        this.sessionData = sessionData;
     }
 
-    limparDados() {
+    clearData() {
         this.sessionData = <any>{};
         localStorage.removeItem(environment.storageKeys.session);
     }

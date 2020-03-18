@@ -2,9 +2,11 @@
     <div class="form">
         <form [formGroup]="loginForm">
             <h1>ExpenseHub</h1>
-            <input type="text" class="user" i18n-placeholder="@@username" placeholder="Username" />
-            <input type="password" class="pass" i18n-placeholder="@@password" placeholder="Password" />
-            <button class="login" (click)="login()" i18n="@@login">Login</button>
+            <input type="text" formControlName="username" class="user" i18n-placeholder="@@username"
+                placeholder="Username" />
+            <input type="password" formControlName="password" class="pass" i18n-placeholder="@@password"
+                placeholder="Password" />
+            <button class="login" [disabled]="!loginForm.valid" (click)="login()" i18n="@@login">Login</button>
         </form>
     </div>
     <div class="row text-center">

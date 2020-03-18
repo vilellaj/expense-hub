@@ -1,10 +1,13 @@
-﻿using ExpenseHub.Service.Domain;
+﻿using System.Text;
+using ExpenseHub.Service.Domain;
 using ExpenseHub.Service.Infra;
 using ExpenseHub.Service.Infra.DataContexts;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ExpenseHub.Service.API
 {
@@ -17,6 +20,21 @@ namespace ExpenseHub.Service.API
             services.AddControllers();
             services.AddCors();
             services.AddHealthChecks();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+              .AddJwtBearer(options =>
+              {
+                  options.TokenValidationParameters = new TokenValidationParameters
+                  {
+                      ValidateIssuer = true,
+                      ValidateAudience = true,
+                      ValidateLifetime = true,
+                      ValidateIssuerSigningKey = true,
+                      ValidIssuer = "expensehub",
+                      ValidAudience = "expensehubusers",
+                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("expensehubkey@expensehubkey"))
+                  };
+              });
 
             services.AddDbContext<AppDataContext>(options =>
                 options.UseSqlite("Data Source=expensehub.db"));
@@ -41,7 +59,11 @@ namespace ExpenseHub.Service.API
                 x.AllowAnyOrigin();
             });
 
+
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
