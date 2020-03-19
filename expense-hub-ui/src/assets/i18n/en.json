@@ -28,5 +28,6 @@
     "ItemRemoved": "Item removed!",
     "ItemUpdated": "Item updated!",
     "ItemSaved": "Item saved!",
-    "WrongUser": "Wrong user and/or password"
+    "WrongUser": "Wrong user and/or password",
+    "NoData": "Nothing to show here"
 }

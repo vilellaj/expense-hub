@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs/operators';
 import { Expense } from 'src/app/models/expense';
 import { AuthService } from 'src/app/services/auth.service';
 import { ExpenseService } from 'src/app/services/expense.service';
-import Swal from 'sweetalert2';
-import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { SwalService } from 'src/app/shared/swal.service';
+import * as moment from 'moment';
+import { DateUtil } from 'src/app/util/date.util';
 
 @Component({
     selector: 'app-expense-details',
@@ -35,9 +36,8 @@ export class ExpenseDetailsComponent implements OnInit {
     }
 
     buildForm(expense: Expense = new Expense()) {
-        const date = expense.date ?
-            new Date(expense.date).toISOString().slice(0, -1) :
-            '';
+        let date = DateUtil
+            .getStringFromISO(expense.date, this._translate.store.currentLang);
 
         this.expenseForm = this._formBuilder.group({
             description: [expense.description, Validators.required],
@@ -82,7 +82,8 @@ export class ExpenseDetailsComponent implements OnInit {
         const id = parseInt(this.id);
         const value = this.expenseForm.value;
 
-        value.date = this.getDate(value.date);
+        value.date = DateUtil
+            .getISOFromString(value.date, this._translate.store.currentLang);
 
         if (id > 0) {
             value.id = id;
@@ -90,15 +91,6 @@ export class ExpenseDetailsComponent implements OnInit {
         } else {
             this.add(value);
         }
-    }
-
-    getDate(date: string): Date {
-        if (this._translate.store.currentLang == 'pt') {
-            const split = date.split('/');
-            date = `${split[1]}/${split[0]}/${split[2]}`
-        }
-
-        return new Date(date);
     }
 
     add(value): void {

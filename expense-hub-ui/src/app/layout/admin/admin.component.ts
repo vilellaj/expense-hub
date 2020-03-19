@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2'
-import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
+import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-admin',
@@ -17,7 +17,7 @@ export class AdminComponent {
 
     }
 
-    signOut(event: Event) {
+    signOut(event: Event): void {
         if (event) {
             event.preventDefault();
         }

@@ -62,4 +62,9 @@
             </div>
         </div>
     </div>
+    <div class="row" *ngIf="expenses.length == 0">
+        <div class="col-12 text-center">
+            {{'NoData' | translate}}
+        </div>
+    </div>
 </div>

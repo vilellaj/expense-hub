@@ -28,5 +28,6 @@
     "ItemRemoved": "Item removido!",
     "ItemUpdated": "Item atualizado!",
     "ItemSaved": "Item adicionado!",
-    "WrongUser": "Usuário e/ou senha inválidos"
+    "WrongUser": "Usuário e/ou senha inválidos",
+    "NoData": "Nada para exibir aqui"
 }

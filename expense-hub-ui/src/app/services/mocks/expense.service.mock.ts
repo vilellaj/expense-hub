@@ -9,7 +9,7 @@ export class ExpenseServiceMock {
     constructor() {
         const expense = new Expense();
         expense.id = 1;
-        expense.date = new Date();
+        expense.date = new Date().toString();
         expense.description = 'New Expense';
         expense.value = 100;
         this.expenses.push(expense);
