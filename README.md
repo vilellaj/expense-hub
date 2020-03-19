@@ -31,6 +31,7 @@ The app will listen on port 5000
 Go to expense-hub-ui folder and run
 
 ```npm install```
+
 ```npm start```
 
 The app will listen on port 4200
