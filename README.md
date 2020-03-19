@@ -24,7 +24,7 @@ Go to expense-hub-service folder and run
 
 ```dotnet run --project ExpenseHub.Service.API```
 
-The app will listen on port 5000
+The api will listen on port 5000
 
 ## Frontend Manual startup
 
