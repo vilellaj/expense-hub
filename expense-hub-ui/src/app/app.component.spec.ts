@@ -1,39 +1,42 @@
-import { async, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateStore } from '@ngx-translate/core';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { AppComponent } from './app.component';
-import { SharedModule } from './shared/shared.module';
 
 describe('AppComponent', () => {
+  let comp: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
         NgxSpinnerModule,
-        SharedModule
+        HttpClientModule,
+        ReactiveFormsModule,
+        SharedModule.forRoot()
       ],
       declarations: [
         AppComponent
       ],
-    }).compileComponents();
+      providers: [
+        { provide: TranslateStore, useClass: TranslateStore }
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
+    }).compileComponents().then(() => {
+      fixture = TestBed.createComponent(AppComponent);
+      comp = fixture.componentInstance;
+    });
   }));
 
-  it('should create the app', () => {
+  it('should create the component', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+    const component = fixture.debugElement.componentInstance;
+    expect(component).toBeTruthy();
   });
-
-  // it(`should have as title 'expense-hub-ui'`, () => {
-  //   const fixture = TestBed.createComponent(AppComponent);
-  //   const app = fixture.debugElement.componentInstance;
-  //   expect(app.title).toEqual('expense-hub-ui');
-  // });
-
-  // it('should render title', () => {
-  //   const fixture = TestBed.createComponent(AppComponent);
-  //   fixture.detectChanges();
-  //   const compiled = fixture.debugElement.nativeElement;
-  //   expect(compiled.querySelector('.content span').textContent).toContain('expense-hub-ui app is running!');
-  // });
 });

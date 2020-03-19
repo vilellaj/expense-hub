@@ -17,8 +17,8 @@ import { SwalService } from 'src/app/shared/swal.service';
     providers: [TranslatePipe]
 })
 export class ExpenseDetailsComponent implements OnInit {
-    private id: string;
-    private expense: Expense;
+    public id: string;
+    public expense: Expense;
     public expenseForm: FormGroup;
     public action: string;
 
