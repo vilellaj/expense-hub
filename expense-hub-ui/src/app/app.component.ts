@@ -8,8 +8,6 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'expense-hub-ui';
-
   constructor(private _translate: TranslateService) {
     const lang = localStorage.getItem(environment.storageKeys.lang);
 

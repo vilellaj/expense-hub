@@ -19,7 +19,6 @@ import { SwalService } from 'src/app/shared/swal.service';
 })
 export class LoginComponent implements OnInit {
     public loginForm: FormGroup;
-    param = { value: 'world' };
 
     constructor(private _formBuilder: FormBuilder,
         private _spinner: NgxSpinnerService,
@@ -67,12 +66,12 @@ export class LoginComponent implements OnInit {
             })
     }
 
-    setLang(lang): void {
+    setLang(lang: string): void {
         localStorage.setItem(environment.storageKeys.lang, lang);
         this._translate.use(lang);
     }
 
-    isCurrentLang(lang): boolean {
+    isCurrentLang(lang: string): boolean {
         return lang === this._translate.store.currentLang;
     }
 }

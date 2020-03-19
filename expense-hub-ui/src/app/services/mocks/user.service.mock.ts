@@ -10,24 +10,4 @@ export class UserServiceMock {
         const sessionData = new SessionData();
         return of(sessionData);
     }
-
-    // getById(id: number): Observable<Expense> {
-    //     const url = `${this.baseURL}/${id}`;
-    //     return this._http.get<Expense>(url, this._sharedService.httpOptions);
-    // }
-
-    // add(data): Observable<IMessageResult> {
-    //     const url = `${this.baseURL}`;
-    //     return this._http.post<IMessageResult>(url, data, this._sharedService.httpOptions);
-    // }
-
-    // update(data): Observable<IMessageResult> {
-    //     const url = `${this.baseURL}/${data.id}`;
-    //     return this._http.put<IMessageResult>(url, data, this._sharedService.httpOptions);
-    // }
-
-    // delete(id: number): Observable<IMessageResult> {
-    //     const url = `${this.baseURL}/${id}`;
-    //     return this._http.delete<IMessageResult>(url, this._sharedService.httpOptions);
-    // }
 }

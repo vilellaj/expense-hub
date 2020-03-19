@@ -43,7 +43,7 @@ export class ExpenseListComponent implements OnInit {
             })
     }
 
-    remove(expense) {
+    remove(expense: Expense): void {
         Swal.fire({
             title: this._translatePipe.transform('Remove'),
             text: this._translatePipe.transform('AreYouSure'),
@@ -60,7 +60,7 @@ export class ExpenseListComponent implements OnInit {
         })
     }
 
-    removeExpense(expense) {
+    removeExpense(expense: Expense): void {
         this._spinner.show();
 
         this._expenseService.delete(expense.id)

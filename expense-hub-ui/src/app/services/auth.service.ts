@@ -24,25 +24,6 @@ export class AuthService {
         return this._locale || 'en-US';
     }
 
-    registerCulture(culture: string) {
-        if (!culture) {
-            return;
-        }
-        this.locale = culture;
-
-        // Register locale data since only the en-US locale data comes with Angular
-        switch (culture) {
-            case 'pt-BR': {
-                registerLocaleData(localePortuguese);
-                break;
-            }
-            case 'es-ES': {
-                registerLocaleData(localeSpanish);
-                break;
-            }
-        }
-    }
-
     get token(): string {
         return this.sessionData.token;
     }
@@ -53,20 +34,20 @@ export class AuthService {
 
     constructor(private http: HttpClient,
         private router: Router) {
-        this.sessionData = this.obtersessionDataDoStorage() || {};
+        this.sessionData = this.obtersessionDataFromStorage() || <SessionData>{};
     }
 
-    obtersessionDataDoStorage() {
+    obtersessionDataFromStorage(): SessionData {
         const dadosStorage = localStorage.getItem(environment.storageKeys.session);
         return dadosStorage ? JSON.parse(dadosStorage) : null;
     }
 
-    saveSessionData(sessionData: SessionData) {
+    saveSessionData(sessionData: SessionData): void {
         localStorage.setItem(environment.storageKeys.session, JSON.stringify(sessionData));
         this.sessionData = sessionData;
     }
 
-    clearData() {
+    clearData(): void {
         this.sessionData = <SessionData>{};
         localStorage.removeItem(environment.storageKeys.session);
     }

@@ -35,7 +35,7 @@ export class ExpenseDetailsComponent implements OnInit {
         this.buildForm();
     }
 
-    buildForm(expense: Expense = new Expense()) {
+    buildForm(expense: Expense = new Expense()): void {
         let date = DateUtil
             .getStringFromISO(expense.date, this._translate.store.currentLang);
 
@@ -93,7 +93,7 @@ export class ExpenseDetailsComponent implements OnInit {
         }
     }
 
-    add(value): void {
+    add(value: any): void {
         this._spinner.show();
         this._expenseService.add(value)
             .pipe(finalize(() => this._spinner.hide()))
@@ -111,7 +111,7 @@ export class ExpenseDetailsComponent implements OnInit {
             });
     }
 
-    update(value): void {
+    update(value: any): void {
         this._spinner.show();
 
         this._expenseService.update(value)

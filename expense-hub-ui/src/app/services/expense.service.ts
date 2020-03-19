@@ -23,12 +23,12 @@ export class ExpenseService {
         return this._http.get<Expense>(url, this._sharedService.httpOptions);
     }
 
-    add(data): Observable<IMessageResult> {
+    add(data: any): Observable<IMessageResult> {
         const url = `${this.baseURL}`;
         return this._http.post<IMessageResult>(url, data, this._sharedService.httpOptions);
     }
 
-    update(data): Observable<IMessageResult> {
+    update(data: any): Observable<IMessageResult> {
         const url = `${this.baseURL}/${data.id}`;
         return this._http.put<IMessageResult>(url, data, this._sharedService.httpOptions);
     }
