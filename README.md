@@ -13,6 +13,12 @@ An APP to control your expenses
  - Angular CLI
  - Dotnetcore SDK 3.1
 
+## Auth
+
+To access the app, username is **test** and password is **123**.
+This user is created at API Startup. The database is ephemeral, for sake of simplicity.
+If you want to keep data, add a volume for the **expense-hub-service** at docker-compose.yml file
+
 ## Startup with DockerCompose
 
 Run
@@ -22,6 +28,7 @@ Run
 The app will be running on port 80 and the API on port 3000
 
 ## Backend Manual startup
+
 Go to expense-hub-service folder and run
 
 ```dotnet run --project ExpenseHub.Service.API```
