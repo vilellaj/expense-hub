@@ -19,6 +19,8 @@ Run
 
 ```docker-compose up -d```
 
+The app will be running on port 80 and the API on port 3000
+
 ## Backend Manual startup
 Go to expense-hub-service folder and run
 
